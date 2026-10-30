@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Início</string>
+    <string name="hero_hint">OK para abrir · manter OK para ver informações da app</string>
+    <string name="featured_title">Em destaque</string>
+    <string name="all_title">Todas as apps</string>
+    <string name="open_failed">Não foi possível abrir a app</string>
+</resources>
