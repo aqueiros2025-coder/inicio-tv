@@ -5,4 +5,7 @@
     <string name="featured_title">Em destaque</string>
     <string name="all_title">Todas as apps</string>
     <string name="open_failed">Não foi possível abrir a app</string>
+    <string name="options">Opções</string>
+    <string name="weather_loading">A carregar o tempo…</string>
+    <string name="weather_unavailable">Tempo indisponível</string>
 </resources>

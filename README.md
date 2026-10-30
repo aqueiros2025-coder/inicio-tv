@@ -4,6 +4,8 @@ Launcher para Android TV com fundo em gradiente, título grande da app em foco, 
 
 Os cartões grandes mostram o banner de TV da app, se ela tiver um, ou o ícone. Mostrar capas de séries e filmes só é possível se a própria app as publicar no Android TV.
 
+No topo aparecem o tempo atual da tua cidade, a hora e o botão **Opções**, e por baixo a previsão de hoje e dos 3 dias seguintes (dados do [Open-Meteo](https://open-meteo.com), gratuito e sem chave). A box precisa de internet.
+
 ## Obter o APK (só com o telemóvel)
 
 1. Cria uma conta gratuita em github.com e um repositório novo (por exemplo `inicio-tv`).
@@ -21,9 +23,13 @@ Os cartões grandes mostram o banner de TV da app, se ela tiver um, ou o ícone.
 
 ## Personalizar
 
-Tudo está no topo de `app/src/main/java/com/example/tvlauncher/MainActivity.kt`:
+Abre o botão **Opções** (ou carrega na tecla Menu do comando) para:
 
-- `FEATURED`: nomes (ou parte do nome) das apps em destaque, pela ordem em que aparecem.
-- `HIDDEN_PACKAGES`: apps que nunca aparecem na linha "Todas as apps".
+- mudar a **cidade** do tempo e a unidade (°C ou °F), ou desligar a previsão;
+- escolher as **apps em destaque**, que ficam pela ordem em que as marcas;
+- **esconder** apps da linha "Todas as apps";
+- **repor** as predefinições.
 
 Manter OK premido num cartão abre as informações da app (para desinstalar ou limpar a cache).
+
+Valores iniciais (antes de mexeres nas Opções) estão no topo de `app/src/main/java/com/example/tvlauncher/MainActivity.kt`: `FEATURED_DEFAULT` e `HIDDEN_DEFAULT`.
