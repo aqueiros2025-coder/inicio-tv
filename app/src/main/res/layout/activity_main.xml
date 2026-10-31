@@ -1,178 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:orientation="vertical"
-    android:paddingStart="56dp"
-    android:paddingLeft="56dp"
-    android:paddingTop="28dp"
-    android:paddingBottom="20dp">
+    android:layout_height="match_parent">
 
+    <!-- Fundo (por esta ordem: gradiente, imagem, vídeo, escurecimento) -->
+    <com.example.tvlauncher.GradientView
+        android:id="@+id/bgGradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <com.example.tvlauncher.FillVideoView
+        android:id="@+id/bgVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/scrim" />
+
+    <!-- Conteúdo -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingEnd="56dp"
-        android:paddingRight="56dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/app_name"
-            android:textColor="#B3FFFFFF"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/weatherNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:maxLines="1"
-            android:text="@string/weather_loading"
-            android:textColor="#CCFFFFFF"
-            android:textSize="20sp" />
-
-        <TextClock
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:format12Hour="HH:mm"
-            android:format24Hour="HH:mm"
-            android:textColor="#CCFFFFFF"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/btnOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_bg"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_menu"
-            android:drawableLeft="@drawable/ic_menu"
-            android:drawablePadding="8dp"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="10dp"
-            android:text="@string/options"
-            android:textColor="#FFFFFFFF"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/forecastRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="24dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/fc0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:textColor="#E6FFFFFF"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/fc1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:textColor="#E6FFFFFF"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/fc2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:textColor="#E6FFFFFF"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/fc3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#E6FFFFFF"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="bottom"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingBottom="24dp">
+        android:paddingTop="28dp"
+        android:paddingBottom="16dp">
 
-        <TextView
-            android:id="@+id/heroTitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#FFFFFFFF"
-            android:textSize="44sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="56dp"
+            android:paddingLeft="56dp"
+            android:paddingEnd="56dp"
+            android:paddingRight="56dp">
 
-        <TextView
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:textColor="#B3FFFFFF"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/weatherNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
+                android:maxLines="1"
+                android:text="@string/weather_loading"
+                android:textColor="#CCFFFFFF"
+                android:textSize="20sp" />
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="28dp"
+                android:layout_marginRight="28dp"
+                android:format12Hour="HH:mm"
+                android:format24Hour="HH:mm"
+                android:textColor="#CCFFFFFF"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/btnOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_bg"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_menu"
+                android:drawableLeft="@drawable/ic_menu"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="10dp"
+                android:text="@string/options"
+                android:textColor="#FFFFFFFF"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <!-- Título da app em foco (esquerda) e previsão do tempo (direita) -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hero_hint"
-            android:textColor="#99FFFFFF"
-            android:textSize="18sp" />
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingStart="56dp"
+            android:paddingLeft="56dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="56dp"
+            android:paddingRight="56dp"
+            android:paddingBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/heroTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hero_hint"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/forecastRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/fc0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#E6FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fc1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#E6FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fc2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#E6FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fc3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="#E6FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- As filas deslocam-se na vertical, por isso cabem em qualquer ecrã -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingStart="56dp"
+            android:paddingLeft="56dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/featured_title"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvFeatured"
+                    android:layout_width="match_parent"
+                    android:layout_height="178dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="56dp"
+                    android:paddingRight="56dp"
+                    android:paddingBottom="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/recentSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/recent_title"
+                        android:textColor="#B3FFFFFF"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRecent"
+                        android:layout_width="match_parent"
+                        android:layout_height="178dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingTop="16dp"
+                        android:paddingEnd="56dp"
+                        android:paddingRight="56dp"
+                        android:paddingBottom="16dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_title"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="56dp"
+                    android:paddingRight="56dp"
+                    android:paddingBottom="12dp" />
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:text="@string/featured_title"
-        android:textColor="#B3FFFFFF"
-        android:textSize="16sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFeatured"
-        android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="16dp"
-        android:paddingEnd="56dp"
-        android:paddingRight="56dp"
-        android:paddingBottom="16dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="4dp"
-        android:text="@string/all_title"
-        android:textColor="#B3FFFFFF"
-        android:textSize="16sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAll"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="12dp"
-        android:paddingEnd="56dp"
-        android:paddingRight="56dp"
-        android:paddingBottom="12dp" />
-</LinearLayout>
+</FrameLayout>

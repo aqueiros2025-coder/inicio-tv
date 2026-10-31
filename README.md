@@ -25,11 +25,24 @@ No topo aparecem o tempo atual da tua cidade, a hora e o botão **Opções**, e 
 
 Abre o botão **Opções** (ou carrega na tecla Menu do comando) para:
 
+- escolher o **fundo de ecrã** (ver abaixo);
+- ligar, desligar ou limpar a linha **Usadas recentemente** (as últimas apps que abriste, mais recente primeiro);
 - mudar a **cidade** do tempo e a unidade (°C ou °F), ou desligar a previsão;
 - escolher as **apps em destaque**, que ficam pela ordem em que as marcas;
 - **esconder** apps da linha "Todas as apps";
 - **repor** as predefinições.
 
 Manter OK premido num cartão abre as informações da app (para desinstalar ou limpar a cache).
+
+## Fundos de ecrã
+
+Em **Opções > Fundos de ecrã**:
+
+- **Escolher fundo**: gradientes incluídos (fixos: Noite, Oceano, Pôr do sol; animados: Aurora, Brasas) e os teus ficheiros (imagens fixas JPG, PNG, WEBP; vídeos animados MP4, WEBM).
+- **Descarregar da Internet**: uma foto aleatória (Picsum, 1920×1080) ou um endereço (URL) direto para uma imagem ou vídeo.
+- **Enviar do telemóvel (QR Code)**: a box mostra um QR Code. Lê-o com a câmara do telemóvel (na mesma rede da box), abre a página e envia uma imagem ou vídeo, ou cola um endereço para a box descarregar. O servidor só funciona enquanto o QR Code estiver no ecrã e o link tem um código secreto.
+- **Apagar um fundo descarregado**.
+
+Dicas para vídeos animados: curtos (10 a 30 s), 1080p, 16:9, H.264, até cerca de 8 Mbps, sem som necessário (é silenciado). O vídeo é esticado ao ecrã e pára quando abres outra app, para a box não ficar mais lenta. GIFs não são suportados: converte para MP4.
 
 Valores iniciais (antes de mexeres nas Opções) estão no topo de `app/src/main/java/com/example/tvlauncher/MainActivity.kt`: `FEATURED_DEFAULT` e `HIDDEN_DEFAULT`.
