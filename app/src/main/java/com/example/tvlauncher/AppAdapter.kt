@@ -17,10 +17,11 @@ data class AppEntry(
     val banner: Drawable?
 )
 
+// Mosaicos quadrados. Quando labelOnFocus é verdadeiro (filas grandes) o nome só aparece
+// por baixo do mosaico que está em foco, como na PS5; nas filas pequenas o nome está sempre visível.
 class AppAdapter(
     private val layoutRes: Int,
-    private val large: Boolean,
-    private val onFocus: (AppEntry) -> Unit,
+    private val labelOnFocus: Boolean,
     private val onOpen: (AppEntry) -> Unit,
     private val onInfo: (AppEntry) -> Unit
 ) : RecyclerView.Adapter<AppAdapter.VH>() {
@@ -46,26 +47,10 @@ class AppAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val entry = items[position]
+        holder.img.setImageDrawable(entry.icon)
         holder.label.text = entry.label
-
-        if (large) {
-            val pad = (28 * holder.itemView.resources.displayMetrics.density).toInt()
-            val banner = entry.banner
-            if (banner != null) {
-                // Banner de TV (16:9): preenche o cartão e já traz o nome da app.
-                holder.img.scaleType = ImageView.ScaleType.CENTER_CROP
-                holder.img.setPadding(0, 0, 0, 0)
-                holder.img.setImageDrawable(banner)
-                holder.label.visibility = View.GONE
-            } else {
-                holder.img.scaleType = ImageView.ScaleType.FIT_CENTER
-                holder.img.setPadding(pad, pad, pad, pad)
-                holder.img.setImageDrawable(entry.icon)
-                holder.label.visibility = View.VISIBLE
-            }
-        } else {
-            holder.img.setImageDrawable(entry.icon)
-        }
+        holder.label.alpha = if (labelOnFocus) 0f else 1f
+        holder.label.isSelected = false
 
         val v = holder.itemView
         v.setOnClickListener { onOpen(entry) }
@@ -74,10 +59,13 @@ class AppAdapter(
             true
         }
         v.setOnFocusChangeListener { view, hasFocus ->
-            val scale = if (hasFocus) 1.12f else 1f
+            val scale = if (hasFocus) (if (labelOnFocus) 1.2f else 1.12f) else 1f
             view.animate().scaleX(scale).scaleY(scale).setDuration(150).start()
             view.translationZ = if (hasFocus) 24f else 0f
-            if (hasFocus) onFocus(entry)
+            holder.label.isSelected = hasFocus
+            if (labelOnFocus) {
+                holder.label.animate().alpha(if (hasFocus) 1f else 0f).setDuration(150).start()
+            }
         }
     }
 }

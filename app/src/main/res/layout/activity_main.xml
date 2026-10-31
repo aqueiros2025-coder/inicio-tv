@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Fundo (por esta ordem: gradiente, imagem, vídeo, escurecimento) -->
+    <!-- Fundo (por esta ordem: gradiente/ondas, imagem, vídeo, escurecimento) -->
     <com.example.tvlauncher.GradientView
         android:id="@+id/bgGradient"
         android:layout_width="match_parent"
@@ -36,9 +36,10 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingTop="28dp"
+        android:paddingTop="24dp"
         android:paddingBottom="16dp">
 
+        <!-- Barra superior: separador à esquerda; tempo, hora e opções à direita -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,13 +50,26 @@
             android:paddingEnd="56dp"
             android:paddingRight="56dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textColor="#B3FFFFFF"
-                android:textSize="22sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="28dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#FFFFFFFF" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/weatherNow"
@@ -66,7 +80,7 @@
                 android:maxLines="1"
                 android:text="@string/weather_loading"
                 android:textColor="#CCFFFFFF"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextClock
                 android:layout_width="wrap_content"
@@ -75,7 +89,7 @@
                 android:layout_marginRight="28dp"
                 android:format12Hour="HH:mm"
                 android:format24Hour="HH:mm"
-                android:textColor="#CCFFFFFF"
+                android:textColor="#FFFFFFFF"
                 android:textSize="22sp" />
 
             <TextView
@@ -100,92 +114,11 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <!-- Título da app em foco (esquerda) e previsão do tempo (direita) -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingStart="56dp"
-            android:paddingLeft="56dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="56dp"
-            android:paddingRight="56dp"
-            android:paddingBottom="8dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/heroTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="#FFFFFFFF"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hero_hint"
-                    android:textColor="#99FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/forecastRow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/fc0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:textColor="#E6FFFFFF"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/fc1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:textColor="#E6FFFFFF"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/fc2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:textColor="#E6FFFFFF"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/fc3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:textColor="#E6FFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </LinearLayout>
-
         <!-- As filas deslocam-se na vertical, por isso cabem em qualquer ecrã -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -205,19 +138,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/featured_title"
-                    android:textColor="#B3FFFFFF"
+                    android:textColor="#CCFFFFFF"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFeatured"
                     android:layout_width="match_parent"
-                    android:layout_height="178dp"
+                    android:layout_height="206dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:paddingTop="16dp"
+                    android:paddingTop="20dp"
                     android:paddingEnd="56dp"
                     android:paddingRight="56dp"
-                    android:paddingBottom="16dp" />
+                    android:paddingBottom="20dp" />
 
                 <LinearLayout
                     android:id="@+id/recentSection"
@@ -232,32 +165,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/recent_title"
-                        android:textColor="#B3FFFFFF"
+                        android:textColor="#CCFFFFFF"
                         android:textSize="16sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvRecent"
                         android:layout_width="match_parent"
-                        android:layout_height="178dp"
+                        android:layout_height="206dp"
                         android:clipChildren="false"
                         android:clipToPadding="false"
-                        android:paddingTop="16dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="56dp"
                         android:paddingRight="56dp"
-                        android:paddingBottom="16dp" />
+                        android:paddingBottom="20dp" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_title"
-                    android:textColor="#B3FFFFFF"
+                    android:textColor="#CCFFFFFF"
                     android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvAll"
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="142dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:paddingTop="12dp"
@@ -266,5 +199,57 @@
                     android:paddingBottom="12dp" />
             </LinearLayout>
         </ScrollView>
+
+        <!-- Painel inferior com a previsão do tempo -->
+        <LinearLayout
+            android:id="@+id/forecastRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/fc0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#F2FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/fc1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#F2FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/fc2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#F2FFFFFF"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/fc3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#F2FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

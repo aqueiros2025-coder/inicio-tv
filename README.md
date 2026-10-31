@@ -1,10 +1,10 @@
-# Início TV, launcher estilo Apple TV
+# Início TV, launcher inspirado no ecrã inicial das consolas
 
-Launcher para Android TV com fundo em gradiente, título grande da app em foco, uma linha de **cartões grandes em destaque** (Nuvio, Arvio, Wuplay, Playtorrio, Stremio) e uma linha com **todas as outras apps**. Não mostra sugestões da Google.
+Launcher para Android TV com o estilo de uma consola de jogos: filas horizontais de **mosaicos quadrados**, em que o mosaico em foco cresce e mostra o nome por baixo, e um fundo azul-escuro com ondas de luz. Tem uma fila de **destaque** (Nuvio, Arvio, Wuplay, Playtorrio, Stremio), uma de **usadas recentemente** e uma com **todas as outras apps**. Não mostra sugestões da Google. É um desenho próprio: não usa logótipos, símbolos nem imagens de nenhuma marca.
 
-Os cartões grandes mostram o banner de TV da app, se ela tiver um, ou o ícone. Mostrar capas de séries e filmes só é possível se a própria app as publicar no Android TV.
+Os mosaicos mostram o ícone da app. Mostrar capas de séries e filmes só é possível se a própria app as publicar no Android TV.
 
-No topo aparecem o tempo atual da tua cidade, a hora e o botão **Opções**, e por baixo a previsão de hoje e dos 3 dias seguintes (dados do [Open-Meteo](https://open-meteo.com), gratuito e sem chave). A box precisa de internet.
+No topo aparecem o tempo atual da tua cidade, a hora e o botão **Opções**, e num painel em baixo a previsão de hoje e dos 3 dias seguintes (dados do [Open-Meteo](https://open-meteo.com), gratuito e sem chave). A box precisa de internet.
 
 ## Obter o APK (só com o telemóvel)
 
@@ -38,7 +38,7 @@ Manter OK premido num cartão abre as informações da app (para desinstalar ou 
 
 Em **Opções > Fundos de ecrã**:
 
-- **Escolher fundo**: gradientes incluídos (fixos: Noite, Oceano, Pôr do sol; animados: Aurora, Brasas) e os teus ficheiros (imagens fixas JPG, PNG, WEBP; vídeos animados MP4, WEBM).
+- **Escolher fundo**: fundos incluídos (Ondas azuis, animado ou fixo, que é o predefinido; gradientes fixos Noite, Oceano, Pôr do sol; gradientes animados Aurora, Brasas) e os teus ficheiros (imagens fixas JPG, PNG, WEBP; vídeos animados MP4, WEBM).
 - **Descarregar da Internet**: uma foto aleatória (Picsum, 1920×1080) ou um endereço (URL) direto para uma imagem ou vídeo.
 - **Enviar do telemóvel (QR Code)**: a box mostra um QR Code. Lê-o com a câmara do telemóvel (na mesma rede da box), abre a página e envia uma imagem ou vídeo, ou cola um endereço para a box descarregar. O servidor só funciona enquanto o QR Code estiver no ecrã e o link tem um código secreto.
 - **Apagar um fundo descarregado**.

@@ -12,7 +12,8 @@ data class GradientPreset(
     val id: String,
     val name: String,
     val animated: Boolean,
-    val colors: IntArray
+    val colors: IntArray,
+    val waves: Boolean = false
 )
 
 data class WallpaperFile(
@@ -23,10 +24,20 @@ data class WallpaperFile(
 )
 
 object Wallpapers {
-    const val DEFAULT_ID = "builtin:noite"
+    const val DEFAULT_ID = "builtin:ondas"
 
     // Fundos incluídos na app (não precisam de descarregar nada).
     val BUILTINS: List<GradientPreset> = listOf(
+        GradientPreset(
+            "builtin:ondas", "Ondas azuis", true,
+            intArrayOf(0xFF020B24.toInt(), 0xFF0A2A6E.toInt(), 0xFF1458B8.toInt()),
+            waves = true
+        ),
+        GradientPreset(
+            "builtin:ondas_fixo", "Ondas azuis", false,
+            intArrayOf(0xFF020B24.toInt(), 0xFF0A2A6E.toInt(), 0xFF1458B8.toInt()),
+            waves = true
+        ),
         GradientPreset(
             "builtin:noite", "Noite", false,
             intArrayOf(0xFF0B1020.toInt(), 0xFF1B1740.toInt(), 0xFF3A1C5C.toInt())

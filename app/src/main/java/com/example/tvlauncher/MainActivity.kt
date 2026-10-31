@@ -48,6 +48,7 @@ class MainActivity : Activity() {
         private const val KEY_RECENT = "recent"
         private const val KEY_SHOW_RECENT = "show_recent"
         private const val KEY_WALLPAPER = "wallpaper"
+        private const val KEY_UI_VERSION = "ui_version"
         private const val KEY_CITY = "city"
         private const val KEY_FAHRENHEIT = "fahrenheit"
         private const val KEY_SHOW_WEATHER = "show_weather"
@@ -59,7 +60,6 @@ class MainActivity : Activity() {
         private const val PICSUM_URL = "https://picsum.photos/1920/1080"
     }
 
-    private lateinit var heroTitle: TextView
     private lateinit var weatherNow: TextView
     private lateinit var forecastRow: View
     private lateinit var forecastViews: List<TextView>
@@ -98,7 +98,6 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        heroTitle = findViewById(R.id.heroTitle)
         weatherNow = findViewById(R.id.weatherNow)
         forecastRow = findViewById(R.id.forecastRow)
         forecastViews = listOf<TextView>(
@@ -148,16 +147,23 @@ class MainActivity : Activity() {
         }
         ContextCompat.registerReceiver(this, packageReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
 
+        // Na primeira vez com o novo estilo, quem ainda tinha o fundo antigo passa para as ondas azuis.
+        if (prefs.getInt(KEY_UI_VERSION, 0) < 2) {
+            val current = prefs.getString(KEY_WALLPAPER, null)
+            val editor = prefs.edit().putInt(KEY_UI_VERSION, 2)
+            if (current == null || current == "builtin:noite") {
+                editor.putString(KEY_WALLPAPER, Wallpapers.DEFAULT_ID)
+            }
+            editor.apply()
+        }
+
         applyWallpaper()
         loadApps()
         refreshWeather()
     }
 
     private fun makeAdapter(layout: Int, large: Boolean): AppAdapter {
-        return AppAdapter(
-            layout, large,
-            { e -> onFocused(e) }, { e -> launch(e) }, { e -> showInfo(e) }
-        )
+        return AppAdapter(layout, large, { e -> launch(e) }, { e -> showInfo(e) })
     }
 
     override fun onResume() {
@@ -309,10 +315,6 @@ class MainActivity : Activity() {
             target.requestFocus()
             focusedOnce = true
         }, 200)
-    }
-
-    private fun onFocused(e: AppEntry) {
-        heroTitle.text = e.label
     }
 
     private fun launch(e: AppEntry) {
@@ -783,7 +785,7 @@ class MainActivity : Activity() {
                     "Os ficheiros de fundos descarregados não são apagados."
             )
             .setPositiveButton("Repor") { _, _ ->
-                prefs.edit().clear().apply()
+                prefs.edit().clear().putInt(KEY_UI_VERSION, 2).apply()
                 applyWallpaper()
                 applyEntries()
                 refreshWeather()
