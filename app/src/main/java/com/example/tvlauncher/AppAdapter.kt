@@ -17,8 +17,8 @@ data class AppEntry(
     val banner: Drawable?
 )
 
-// Mosaicos quadrados. Quando labelOnFocus é verdadeiro (filas grandes) o nome só aparece
-// por baixo do mosaico que está em foco, como na PS5; nas filas pequenas o nome está sempre visível.
+// Cartões das apps. Quando labelOnFocus é verdadeiro (cartões retangulares) mostra o banner da app,
+// se existir, e o nome só aparece por baixo do cartão em foco. Nos mosaicos pequenos, o nome está sempre visível.
 class AppAdapter(
     private val layoutRes: Int,
     private val labelOnFocus: Boolean,
@@ -47,7 +47,18 @@ class AppAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val entry = items[position]
-        holder.img.setImageDrawable(entry.icon)
+        val banner = entry.banner
+        val density = holder.itemView.resources.displayMetrics.density
+        if (labelOnFocus && banner != null) {
+            holder.img.scaleType = ImageView.ScaleType.CENTER_CROP
+            holder.img.setPadding(0, 0, 0, 0)
+            holder.img.setImageDrawable(banner)
+        } else {
+            val pad = ((if (labelOnFocus) 14 else 14) * density).toInt()
+            holder.img.scaleType = ImageView.ScaleType.FIT_CENTER
+            holder.img.setPadding(pad, pad, pad, pad)
+            holder.img.setImageDrawable(entry.icon)
+        }
         holder.label.text = entry.label
         holder.label.alpha = if (labelOnFocus) 0f else 1f
         holder.label.isSelected = false
@@ -59,7 +70,7 @@ class AppAdapter(
             true
         }
         v.setOnFocusChangeListener { view, hasFocus ->
-            val scale = if (hasFocus) (if (labelOnFocus) 1.2f else 1.12f) else 1f
+            val scale = if (hasFocus) (if (labelOnFocus) 1.15f else 1.12f) else 1f
             view.animate().scaleX(scale).scaleY(scale).setDuration(150).start()
             view.translationZ = if (hasFocus) 24f else 0f
             holder.label.isSelected = hasFocus

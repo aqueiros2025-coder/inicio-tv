@@ -144,13 +144,41 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFeatured"
                     android:layout_width="match_parent"
-                    android:layout_height="206dp"
+                    android:layout_height="168dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:paddingTop="20dp"
                     android:paddingEnd="56dp"
                     android:paddingRight="56dp"
                     android:paddingBottom="20dp" />
+
+                <LinearLayout
+                    android:id="@+id/continueSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/continue_title"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvContinue"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="56dp"
+                        android:paddingRight="56dp"
+                        android:paddingBottom="20dp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/recentSection"
@@ -171,7 +199,63 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvRecent"
                         android:layout_width="match_parent"
-                        android:layout_height="206dp"
+                        android:layout_height="168dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="56dp"
+                        android:paddingRight="56dp"
+                        android:paddingBottom="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/moviesSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/movies_title"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovies"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="56dp"
+                        android:paddingRight="56dp"
+                        android:paddingBottom="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/seriesSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/series_title"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="16sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvSeries"
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
                         android:clipChildren="false"
                         android:clipToPadding="false"
                         android:paddingTop="20dp"

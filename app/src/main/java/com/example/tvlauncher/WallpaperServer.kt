@@ -146,6 +146,11 @@ class WallpaperServer(
             tmp.delete()
             throw e
         }
+        if ((ext == "mp4" || ext == "webm") && !WallpaperFiles.isLandscapeVideo(dest)) {
+            dest.delete()
+            respond(out, 415, "text/plain", "O vídeo tem de ser horizontal (16:9).")
+            return
+        }
         listener.onFileReceived(dest)
         respond(out, 200, "text/plain", "ok")
     }

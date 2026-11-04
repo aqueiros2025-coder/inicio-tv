@@ -4,6 +4,9 @@
     <string name="hero_hint">OK para abrir · manter OK para ver informações da app</string>
     <string name="featured_title">Em destaque</string>
     <string name="recent_title">Usadas recentemente</string>
+    <string name="continue_title">Continuar a ver</string>
+    <string name="movies_title">Filmes sugeridos</string>
+    <string name="series_title">Séries sugeridas</string>
     <string name="all_title">Todas as apps</string>
     <string name="open_failed">Não foi possível abrir a app</string>
     <string name="options">Opções</string>

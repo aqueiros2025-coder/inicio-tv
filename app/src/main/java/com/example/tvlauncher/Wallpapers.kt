@@ -3,10 +3,12 @@ package com.example.tvlauncher
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 
 data class GradientPreset(
     val id: String,
@@ -22,6 +24,8 @@ data class WallpaperFile(
     val file: File,
     val isVideo: Boolean
 )
+
+class PortraitVideoException : Exception("o vídeo tem de ser horizontal (16:9)")
 
 object Wallpapers {
     const val DEFAULT_ID = "builtin:ondas"
@@ -63,6 +67,53 @@ object Wallpapers {
     fun preset(id: String): GradientPreset? = BUILTINS.firstOrNull { it.id == id }
 }
 
+data class CatalogItem(
+    val name: String,
+    val urls: List<String>,
+    val video: Boolean
+)
+
+// Fundos selecionados para descarregar. Cada item tem um ou mais endereços: a app tenta o primeiro
+// e, se falhar (por exemplo, resolução inexistente), passa ao seguinte.
+//  - Imagens: Wikimedia Commons (imagens em destaque da NASA, ESA e ESO), pedidas já a 1920 px.
+//  - Vídeos: Mixkit (licença gratuita Mixkit), em ciclo, com tentativa de 1080p, depois 720p e 360p.
+object Catalog {
+
+    private fun commons(file: String): List<String> {
+        val encoded = URLEncoder.encode(file, "UTF-8").replace("+", "%20")
+        return listOf("https://commons.wikimedia.org/wiki/Special:FilePath/" + encoded + "?width=1920")
+    }
+
+    private fun mixkit(id: Int): List<String> {
+        val base = "https://assets.mixkit.co/videos/" + id + "/" + id
+        return listOf(base + "-1080.mp4", base + "-720.mp4", base + "-360.mp4")
+    }
+
+    val IMAGES: List<CatalogItem> = listOf(
+        CatalogItem("Nebulosa de Carina", commons("Carina Nebula.jpg"), false),
+        CatalogItem("Nebulosas Coração e Alma", commons("Heart and Soul nebulae.jpg"), false),
+        CatalogItem("Nebulosa do Caranguejo", commons("Crab Nebula.jpg"), false),
+        CatalogItem("Grande Nuvem de Magalhães", commons("Large Magellanic Cloud.jpg"), false),
+        CatalogItem("Nebulosa da Lagoa", commons("Lagoon Nebula.jpg"), false),
+        CatalogItem("Galáxias das Antenas", commons("Antennae galaxies xl.jpg"), false),
+        CatalogItem("Via Láctea em infravermelho", commons("Milky Way IR Spitzer.jpg"), false),
+        CatalogItem("Terra à noite nos EUA", commons("City Lights of the United States 2012.jpg"), false),
+        CatalogItem("Saturno com auroras", commons("Saturn with auroras.jpg"), false),
+        CatalogItem("Lagos glaciares do Butão", commons("Glacial lakes, Bhutan.jpg"), false),
+        CatalogItem("Ilha do Fogo em Cabo Verde", commons("Fogo, Cape Verde Islands.jpg"), false),
+        CatalogItem("Campo Ultra Profundo do Hubble", commons("Hubble ultra deep field.jpg"), false)
+    )
+
+    val VIDEOS: List<CatalogItem> = listOf(
+        CatalogItem("Túnel azul em loop", mixkit(19583), true),
+        CatalogItem("Túnel futurista em loop", mixkit(30340), true),
+        CatalogItem("Mundo abstrato no espaço em loop", mixkit(30595), true),
+        CatalogItem("Túnel alienígena com luz em loop", mixkit(19594), true),
+        CatalogItem("Floresta de inverno com neve em loop", mixkit(26958), true),
+        CatalogItem("Árvores de outono em loop", mixkit(19647), true)
+    )
+}
+
 // Fundos guardados no armazenamento privado da app: imagens (fixos) e vídeos (animados).
 object WallpaperFiles {
     const val MAX_BYTES = 300L * 1024L * 1024L
@@ -98,14 +149,44 @@ object WallpaperFiles {
         return list(context).firstOrNull { it.id == id }
     }
 
-    fun newFile(context: Context, base: String, ext: String): File {
-        val clean = base
+    private fun clean(base: String): String {
+        return base
             .map { if (it.isLetterOrDigit() || it == '-') it else '_' }
             .joinToString("")
             .trim('_')
             .take(40)
             .ifEmpty { "fundo" }
-        return File(dir(context), System.currentTimeMillis().toString() + "_" + clean + "." + ext)
+    }
+
+    // Nome tal como aparece na lista depois de guardado (serve para saber se já foi descarregado).
+    fun displayFor(base: String): String = clean(base).replace('_', ' ')
+
+    fun newFile(context: Context, base: String, ext: String): File {
+        return File(dir(context), System.currentTimeMillis().toString() + "_" + clean(base) + "." + ext)
+    }
+
+    // Os vídeos de fundo são esticados ao ecrã, por isso só aceitamos vídeos horizontais.
+    fun isLandscapeVideo(file: File): Boolean {
+        val r = MediaMetadataRetriever()
+        try {
+            r.setDataSource(file.absolutePath)
+            val w = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toIntOrNull()
+                ?: return true
+            val h = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toIntOrNull()
+                ?: return true
+            val rot = r.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION)?.toIntOrNull() ?: 0
+            val shownW = if (rot == 90 || rot == 270) h else w
+            val shownH = if (rot == 90 || rot == 270) w else h
+            return shownW >= shownH
+        } catch (e: Exception) {
+            return true
+        } finally {
+            try {
+                r.release()
+            } catch (e: Exception) {
+                // nada a libertar
+            }
+        }
     }
 
     // Abre o endereço a seguir redirecionamentos (incluindo de http para https).
@@ -121,7 +202,7 @@ object WallpaperFiles {
             c.instanceFollowRedirects = false
             c.connectTimeout = 10000
             c.readTimeout = 15000
-            c.setRequestProperty("User-Agent", "InicioTV/1.0")
+            c.setRequestProperty("User-Agent", "InicioTV/1.0 (launcher Android TV)")
             val code = c.responseCode
             if (code in 300..399) {
                 val location = c.getHeaderField("Location")
@@ -139,6 +220,21 @@ object WallpaperFiles {
             }
             return c
         }
+    }
+
+    // Tenta cada endereço pela ordem até um funcionar.
+    fun downloadFirst(context: Context, urls: List<String>, baseName: String?): File {
+        var last: Exception? = null
+        for (u in urls) {
+            try {
+                return download(context, u, baseName)
+            } catch (e: PortraitVideoException) {
+                throw e
+            } catch (e: Exception) {
+                last = e
+            }
+        }
+        throw last ?: IllegalStateException("sem endereços")
     }
 
     fun download(context: Context, address: String, baseName: String?): File {
@@ -187,6 +283,10 @@ object WallpaperFiles {
             } catch (e: Exception) {
                 tmp.delete()
                 throw e
+            }
+            if (ext in VIDEO_EXT && !isLandscapeVideo(dest)) {
+                dest.delete()
+                throw PortraitVideoException()
             }
             return dest
         } finally {
